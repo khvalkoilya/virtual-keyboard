@@ -1,4 +1,145 @@
 body {
+  margin: 0;
+  background-color: #ffffff;
+}
+
+main {
+  padding: 80px;
+  width: 900px;
+  margin: 0 auto;
+  background-color: #c0fcb4;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+textarea {
+  height: 130px;
+  width: 98.5%;
+  font-size: 20px;
+}
+
+.keyboard {
+  padding-top: 50px;
+  height: 298px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.active {
+  background-color: #492d2d;
+}
+
+.normal, .backspace, .tabDel, .capsLShift, .enterRShift, .ctrl, .space, .language {
+  background-color: #e5e5e5;
+  -webkit-box-shadow: 1px 2px 3px #000000;
+          box-shadow: 1px 2px 3px #000000;
+  color: #000000;
+  height: 44px;
+  width: 44px;
+  margin-bottom: 9px;
+  border: 3px solid #f0f0f0;
+  border-right-color: #9c9c9c;
+  border-bottom-color: #9c9c9c;
+  margin-right: 9px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buttonClick {
+  position: relative;
+  background-color: #c2c2c2;
+  border-top-color: #9c9c9c;
+  border-left-color: #9c9c9c;
+  border-right-color: #f0f0f0;
+  border-bottom-color: #f0f0f0;
+  top: 2px;
+  left: 2px;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.centerLetter, .upLetter, .centerDoubleLetter {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.centerDoubleLetter {
+  padding-left: 16px;
   font-size: 18px;
+  margin-top: -2px;
+}
+
+.upLetter {
+  padding-left: 8px;
+  padding-top: 3px;
+}
+
+.centerLetter {
+  padding-left: 14px;
+  font-size: 18px;
+  margin-top: 13px;
+}
+
+.backspace {
+  width: 116px;
+}
+
+.backspace .centerLetter {
+  padding-left: 9px;
+  letter-spacing: 0.3px;
+}
+
+.tabDel {
+  width: 50px;
+}
+
+.tabDel .centerLetter {
+  padding-left: 7px;
+}
+
+.capsLShift {
+  width: 125px;
+}
+
+.capsLShift .centerLetter {
+  padding-left: 18px;
+}
+
+.enterRShift {
+  width: 94px;
+}
+
+.enterRShift .centerLetter {
+  padding-left: 22px;
+}
+
+.ctrl {
+  width: 60px;
+}
+
+.ctrl .centerLetter {
+  padding-left: 13px;
+}
+
+.AltLeft .centerLetter, .MetaLeft .centerLetter, .AltRight .centerLetter {
+  padding-left: 7px;
+}
+
+.space {
+  width: 330px;
+}
+
+.language {
+  width: 34px;
+}
+
+.language .centerLetter {
+  padding-left: 4px;
 }
 /*# sourceMappingURL=style.css.map */
