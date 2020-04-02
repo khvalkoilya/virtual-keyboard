@@ -74,7 +74,7 @@ document.querySelector('body').addEventListener('mouseup',(e)=> {
         if(elem.tagName=='DIV') elem.classList.remove('buttonClick');
         else if (parent.tagName=='DIV') parent.classList.remove('buttonClick');
         if(elem.classList.contains('language') || parent.classList.contains('language')) {
-            if(languageOfKeyboard=='ru') {
+            if(localStorage.languageOfKeyboard=='ru') {
                 keyFill("eng");
                 localStorage.languageOfKeyboard="eng";
             }
@@ -139,7 +139,7 @@ document.querySelector('body').addEventListener('keyup', (e)=>{
             if ((item.code == 'ShiftLeft' || item.code == 'AltLeft') && (changeLanguage[0]==true&&changeLanguage[1]==true)) {
                 changeLanguage[0]=false;
                 changeLanguage[1]=false;
-                if(languageOfKeyboard=='ru') {
+                if(localStorage.languageOfKeyboard=='ru') {
                     keyFill("eng");
                     localStorage.languageOfKeyboard='eng';
                 }
