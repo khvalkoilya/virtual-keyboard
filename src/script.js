@@ -7,6 +7,7 @@ const changeLanguage=[false,false];
 let pressShift=false;
 let pressCaps=false;
 let languageOfKeyboard=localStorage.languageOfKeyboard || 'ru';
+let cursor;
 
 
 function createBase() {
@@ -55,21 +56,29 @@ function keyFill(language) {
         }
     }
     document.querySelector('body').setAttribute('onselectstart', "return false");
-    document.querySelector('textarea').setAttribute('disabled', 'disabled');
+    document.querySelector('textarea').setAttribute('autofocus', '');
 
 }
 
 
 document.querySelector('body').addEventListener('mousedown',(e)=> {
-    if(e.target.tagName=='DIV') e.target.classList.add('buttonClick');
-    else if (e.target.parentElement.tagName=='DIV') e.target.parentElement.classList.add('buttonClick');
+    cursor=document.querySelector('textarea').selectionStart;
+    console.log(cursor);
+    let parent = e.target.parentElement;
+    let elem = e.target;
+    if(elem.tagName=='DIV') elem.classList.add('buttonClick');
+    else if (parent.tagName=='DIV') parent.classList.add('buttonClick');
+    for(let item of objOfKeys) {
+        if(elem.classList.contains(item.code) || parent.classList.contains(item.code)) {
+            enterSymbols(item);
+        }
+    }
 });
 
 
 document.querySelector('body').addEventListener('mouseup',(e)=> {
     let parent = e.target.parentElement;
     let elem = e.target;
-
     if(parent.classList.contains('buttonClick') || elem.classList.contains('buttonClick')) {
         if(elem.tagName=='DIV') elem.classList.remove('buttonClick');
         else if (parent.tagName=='DIV') parent.classList.remove('buttonClick');
@@ -89,23 +98,15 @@ document.querySelector('body').addEventListener('mouseup',(e)=> {
     }
     
 
-    for(let item of objOfKeys) {
-        if(elem.classList.contains(item.code) || parent.classList.contains(item.code)) {
-            if(item.type=="write") {
-                write(item);
-            }
-            if(item.code=="Enter") document.querySelector('textarea').value += '\n';
-            if(item.code=="Backspace") document.querySelector('textarea').value=document.querySelector('textarea').value.slice(0,-1);
-        }
-    }
-
     
 
 });
 
 
 document.querySelector('body').addEventListener('keydown', (e)=>{
+    event.preventDefault();
     console.log(event.code);    
+    cursor=document.querySelector('textarea').selectionStart;
     for(let item of objOfKeys) {
         if (item.code==event.code) {
             document.querySelector(`.${item.code}`).classList.add('buttonClick');
@@ -123,8 +124,8 @@ document.querySelector('body').addEventListener('keydown', (e)=>{
                 } 
             }
             console.log(changeLanguage[0]==true&&changeLanguage[1]==true);
-            if(item.code=="Tab") event.preventDefault();
             if(item.code == 'ShiftLeft' || item.code == 'ShiftRight') pressShift = true;
+            enterSymbols(item);
         }
     }
 });
@@ -148,14 +149,29 @@ document.querySelector('body').addEventListener('keyup', (e)=>{
                     localStorage.languageOfKeyboard='ru';
                 }
             }
-            if(item.code=="Enter") document.querySelector('textarea').value += '\n';
-            if(item.code=="Backspace") document.querySelector('textarea').value=document.querySelector('textarea').value.slice(0,-1);
-            if(item.type=="write") {
-                write(item);
-            }
         }
     }
 });
+
+function enterSymbols (item) {
+    if(item.code=="Enter") {
+        document.querySelector('textarea').value=document.querySelector('textarea').value.slice(0,cursor)+'\n'+document.querySelector('textarea').value.slice(cursor,document.querySelector('textarea').value.length);
+        document.querySelector('textarea').selectionEnd=cursor+1;
+    }
+    if(item.code=="Backspace") {
+        if (cursor!=0) {
+            document.querySelector('textarea').value=document.querySelector('textarea').value.slice(0,cursor-1)+document.querySelector('textarea').value.slice(cursor,document.querySelector('textarea').value.length);
+            document.querySelector('textarea').selectionEnd=cursor-1;
+        }
+    } 
+    if(item.code=="Delete")  {
+        document.querySelector('textarea').value=document.querySelector('textarea').value.slice(0,cursor)+document.querySelector('textarea').value.slice(cursor+1,document.querySelector('textarea').value.length);
+        document.querySelector('textarea').selectionEnd=cursor;
+    }
+    if(item.type=="write") {
+        write(item);
+    }
+}
 
 function write (item) {
     if(item.view!="double") {
