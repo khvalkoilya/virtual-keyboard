@@ -29,40 +29,32 @@ else {
 }
 
 function keyFill(language) {
+    localStorage.languageOfKeyboard=language;
     document.querySelector('.keyboard').innerHTML='';
-    if(language == "ru") {
-        for(let item of objOfKeys) {
-            let key = document.createElement('div');
-            key.className=item.size;
-            key.className+= ' ' + item.code;
-            if(item.view=='double') {
-                key.innerHTML='<p class="upLetter">'+item.shiftRuValue+'</p>';
-                key.innerHTML+='<p class="centerDoubleLetter">'+item.ruValue+'</p>';
-            }
-            else key.innerHTML='<p class="centerLetter">'+item.shiftRuValue+'</p>';
-            document.querySelector('.keyboard').append(key);
-        }
-    }
-    if(language == "eng") {
-        for(let item of objOfKeys) {
-            let key = document.createElement('div');
-            key.className=item.size;
-            key.className+= ' ' + item.code;
+    for(let item of objOfKeys) {
+        let key = document.createElement('div');
+        key.className=item.size;
+        key.className+= ' ' + item.code;
+        if(language == "eng") {
             if(item.view=='double') {
                 key.innerHTML='<p class="upLetter">'+item.shiftEngValue+'</p>';
-                key.innerHTML+='<p class="centerDoubleLetter">'+item.engValue+'</p>';
+                key.innerHTML+='<p class="centerLetter">'+item.engValue+'</p>';
             }
             else key.innerHTML='<p class="centerLetter">'+item.shiftEngValue+'</p>';
-            document.querySelector('.keyboard').append(key);
         }
+        else {
+            if(item.view=='double') {
+                key.innerHTML='<p class="upLetter">'+item.shiftRuValue+'</p>';
+                key.innerHTML+='<p class="centerLetter">'+item.ruValue+'</p>';
+            }
+            else key.innerHTML='<p class="centerLetter">'+item.shiftRuValue+'</p>';
+        }
+        document.querySelector('.keyboard').append(key);
     }
-
 }
-
 
 document.querySelector('body').addEventListener('mousedown',(e)=> {
     cursor=document.querySelector('textarea').selectionStart;
-    console.log(cursor);
     let parent = e.target.parentElement;
     let elem = e.target;
     if(elem.tagName=='DIV') elem.classList.add('buttonClick');
@@ -81,29 +73,32 @@ document.querySelector('body').addEventListener('mouseup',(e)=> {
     let parent = e.target.parentElement;
     let elem = e.target;
     if(parent.classList.contains('buttonClick') || elem.classList.contains('buttonClick')) {
-        if(elem.tagName=='DIV') elem.classList.remove('buttonClick');
-        else if (parent.tagName=='DIV') parent.classList.remove('buttonClick');
-        if(elem.classList.contains('CapsLock') || parent.classList.contains('CapsLock')) pressCaps=(!pressCaps);
-        if(elem.classList.contains('ShiftLeft') || parent.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight') || parent.classList.contains('ShiftRight')) pressShift = false;
-        if(elem.classList.contains('language') || parent.classList.contains('language')) {
-            if(localStorage.languageOfKeyboard=='ru') {
-                keyFill("eng");
-                localStorage.languageOfKeyboard="eng";
+        if(elem.classList.contains('CapsLock') || parent.classList.contains('CapsLock')){
+            if(pressCaps) {
+                if(elem.tagName=='DIV') elem.classList.remove('buttonClick');
+                else if (parent.tagName=='DIV') parent.classList.remove('buttonClick');
             }
-            else {
-                keyFill("ru");
-                localStorage.languageOfKeyboard="ru";
-            }
+            pressCaps=(!pressCaps);
         }
+        else {
+            if(elem.tagName=='DIV') elem.classList.remove('buttonClick');
+            else if (parent.tagName=='DIV') parent.classList.remove('buttonClick');
+            if(elem.classList.contains('ShiftLeft') || parent.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight') || parent.classList.contains('ShiftRight')) pressShift = false;
+            if(elem.classList.contains('language') || parent.classList.contains('language')) {
+                if(localStorage.languageOfKeyboard=='ru') {
+                    keyFill("eng");
+                }
+                else {
+                    keyFill("ru");
+                }
+            }
+        } 
     }
     else {
         document.querySelectorAll('div').forEach((e)=>e.classList.remove('buttonClick'));
+        document.querySelector('.CapsLock').classList.add('buttonClick');
         document.querySelector('textarea').focus();
     }
-    
-
-    
-
 });
 
 
@@ -136,19 +131,25 @@ document.querySelector('body').addEventListener('keydown', (e)=>{
 document.querySelector('body').addEventListener('keyup', (e)=>{    
     for(let item of objOfKeys) {
         if (item.code==event.code) {
-            document.querySelector(`.${item.code}`).classList.remove('buttonClick');
-            if(item.code=='CapsLock') pressCaps=(!pressCaps);
-            if(item.code == 'ShiftLeft' || item.code == 'ShiftRight') pressShift = false;
-            if ((item.code == 'ShiftLeft' || item.code == 'AltLeft') && (changeLanguage[0]==true&&changeLanguage[1]==true)) {
-                changeLanguage[0]=false;
-                changeLanguage[1]=false;
-                if(localStorage.languageOfKeyboard=='ru') {
-                    keyFill("eng");
-                    localStorage.languageOfKeyboard='eng';
+            if(item.code=='CapsLock'){
+                if(pressCaps) {
+                    document.querySelector(`.${item.code}`).classList.remove('buttonClick');
                 }
-                else {
-                    keyFill("ru");
-                    localStorage.languageOfKeyboard='ru';
+                pressCaps=(!pressCaps);
+            }
+            else {
+                document.querySelector(`.${item.code}`).classList.remove('buttonClick');
+                if(item.code=='CapsLock') pressCaps=(!pressCaps);
+                if(item.code == 'ShiftLeft' || item.code == 'ShiftRight') pressShift = false;
+                if ((item.code == 'ShiftLeft' || item.code == 'AltLeft') && (changeLanguage[0]==true&&changeLanguage[1]==true)) {
+                    changeLanguage[0]=false;
+                    changeLanguage[1]=false;
+                    if(localStorage.languageOfKeyboard=='ru') {
+                        keyFill("eng");
+                    }
+                    else {
+                        keyFill("ru");
+                    }
                 }
             }
         }

@@ -32,6 +32,7 @@ textarea {
 }
 
 .normal, .backspace, .tabDel, .capsLShift, .enterRShift, .ctrl, .space, .language {
+    position: relative;
     background-color: #e5e5e5;
     box-shadow: 1px 2px 3px #000000;
     color: #000000;
@@ -58,71 +59,41 @@ textarea {
     transition: all 0.2s ease-in-out;
 }
 
-.centerLetter, .upLetter, .centerDoubleLetter {
-    width: 12px;
-    height: 12px;
-    margin: 0;
-    font-size: 12px;
+.centerLetter, .upLetter {
     font-weight: bold;
 }
 
-.centerDoubleLetter {
-    padding-left: 16px;
-    font-size: 18px;
-    margin-top: -2px;
-}
-
 .upLetter {
-    padding-left: 8px;
-    padding-top: 3px;
+    font-size: 12px;
+    position: absolute;
+    left: 8px;
+    top: -10px;
 }
 
 .centerLetter {
-    padding-left: 14px;
-    font-size: 18px;
-    margin-top: 13px;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 11px;
 }
 
 .backspace {
     width: 116px;
-    .centerLetter {
-        padding-left: 9px;
-        letter-spacing: 0.3px;
-    }
 }
 
 .tabDel {
     width: 50px;
-    .centerLetter {
-        padding-left: 7px;
-    }
 }
 
 .capsLShift {
     width: 125px;
-    .centerLetter {
-        padding-left: 18px;
-    }
 }
 
 .enterRShift {
     width: 94px;
-    .centerLetter {
-        padding-left: 22px;
-    }
 }
 
 .ctrl {
     width: 60px;
-    .centerLetter {
-        padding-left: 13px;
-    } 
-}
-
-.AltLeft, .MetaLeft, .AltRight {
-    .centerLetter {
-        padding-left: 7px;
-    }
 }
 
 .space {
@@ -131,7 +102,4 @@ textarea {
 
 .language {
     width: 34px;
-    .centerLetter {
-        padding-left: 4px;
-    }
 }
