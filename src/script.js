@@ -9,7 +9,7 @@ let pressCaps=false;
 let languageOfKeyboard=localStorage.languageOfKeyboard || 'ru';
 let cursor;
 document.querySelector('textarea').focus();
-document.querySelector('textarea').setAttribute('placeholder',"Keyboard designed for WINDOWS\nTo change the language click right shift and right alt!\nEnjoy^__^");
+document.querySelector('textarea').setAttribute('placeholder',"Keyboard designed for WINDOWS\nTo change the language click right shift and right alt!\nEnjoy ^__^");
 document.querySelector('body').setAttribute('onselectstart', "return false");
 function createBase() {
     let main=document.createElement('main');
