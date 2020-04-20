@@ -1,4 +1,4 @@
-import objOfKeys from './buttons.js';
+import objOfKeys from './layouts/buttons.js';
 
 const changeLanguage = [false, false];
 let pressShift = false;
