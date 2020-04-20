@@ -2,20 +2,16 @@ import create from './utils/create.js'
 import objOfKeys from './layouts/buttons.js';
 
 export default function keyFill(lang) {
-    document.querySelector('.keyboard').innerHTML = '';
+    keyboard.innerHTML = '';
     objOfKeys.forEach((item) => {
       const childs = [];
       const upLetter = create('p','upLetter')
       const centerLetter = create('p','centerLetter')
-      if (lang === 'eng') {
-        if (item.view === 'double') {
-          upLetter.innerHTML = item.shiftEngValue;
-          centerLetter.innerHTML = item.engValue;
-        } else centerLetter.innerHTML = item.shiftEngValue;
-      } else if (item.view === 'double') {
-        upLetter.innerHTML = item.shiftRuValue;
-        centerLetter.innerHTML = item.ruValue;
-      } else centerLetter.innerHTML = item.shiftRuValue;
+      const capitalisedLanguage = lang.charAt(0).toUpperCase() + lang.slice(1);
+      if (item.view === 'double') {
+        upLetter.innerHTML = item[`shift${capitalisedLanguage}Value`];
+        centerLetter.innerHTML = item[`${lang}Value`];
+      } else centerLetter.innerHTML = item[`shift${capitalisedLanguage}Value`];
       if(upLetter.innerHTML !== '') childs.push(upLetter);
       childs.push(centerLetter);
       const classes = `${item.size} ${item.code}`;

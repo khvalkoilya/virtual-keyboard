@@ -4,15 +4,26 @@ import keyFill from './createKeyboard.js';
 import vars from './variables.js'
 import * as languages from './language.js'
 
+
+function toggleButtonClickClass(elem, parent, toggleType) {
+    if (elem.tagName === 'DIV') {
+        elem.classList[toggleType]('buttonClick');
+    }
+    else if (parent.tagName === 'DIV') {
+        parent.classList[toggleType]('buttonClick');
+    }
+}
+
 export function mouseDownFunction(e) {
     vars.cursor = vars.field.selectionStart;
     const parent = e.target.parentElement;
     const elem = e.target;
-    if (elem.tagName === 'DIV') elem.classList.add('buttonClick');
-    else if (parent.tagName === 'DIV') parent.classList.add('buttonClick');
+    toggleButtonClickClass(elem, parent, 'add')
     objOfKeys.forEach((item) => {
       if (elem.classList.contains(item.code) || parent.classList.contains(item.code)) {
-        if (elem.classList.contains('ShiftLeft') || parent.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight') || parent.classList.contains('ShiftRight')) vars.pressShift = true;
+        if (elem.className.match(/ShiftLeft|ShiftRight/) || parent.className.match(/ShiftLeft|ShiftRight/)) {
+            vars.pressShift = true;
+        }
         writing.enterSymbols(item);
         window.event.preventDefault();
       }
@@ -25,14 +36,14 @@ export function mouseUpFunction(e) {
     if (parent.classList.contains('buttonClick') || elem.classList.contains('buttonClick')) {
       if (elem.classList.contains('CapsLock') || elem.innerHTML === 'CapsLock') {
         if (vars.pressCaps) {
-          if (elem.tagName === 'DIV') elem.classList.remove('buttonClick');
-          else if (parent.tagName === 'DIV') parent.classList.remove('buttonClick');
+            toggleButtonClickClass(elem, parent, 'remove')
         }
         vars.pressCaps = (!vars.pressCaps);
       } else {
-        if (elem.tagName === 'DIV') elem.classList.remove('buttonClick');
-        else if (parent.tagName === 'DIV') parent.classList.remove('buttonClick');
-        if (elem.classList.contains('ShiftLeft') || parent.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight') || parent.classList.contains('ShiftRight')) vars.pressShift = false;
+        toggleButtonClickClass(elem, parent, 'remove')
+        if (elem.className.match(/ShiftLeft|ShiftRight/) || parent.className.match(/ShiftLeft|ShiftRight/)) {
+            vars.pressShift = false;
+        }
         if (elem.classList.contains('language') || parent.classList.contains('language')) {
           vars.field.focus();
           vars.lang === 'ru' ? vars.lang = 'eng' : vars.lang = 'ru';
@@ -59,7 +70,9 @@ export function keyDownFunction (event) {
           vars.changeLanguage[0] = false;
           vars.changeLanguage[1] = false;
         }
-        if (item.code === 'ShiftLeft' || item.code === 'ShiftRight') vars.pressShift = true;
+        if (item.code.match(/ShiftLeft|ShiftRight/)) {
+            vars.pressShift = true;
+        }
         writing.enterSymbols(item);
       }
     });
@@ -75,9 +88,13 @@ export function keyUpFunction(event) {
           vars.pressCaps = !vars.pressCaps;
         } else {
           document.querySelector(`.${item.code}`).classList.remove('buttonClick');
-          if (item.code === 'CapsLock') vars.pressCaps = (!vars.pressCaps);
-          if (item.code === 'ShiftLeft' || item.code === 'ShiftRight') vars.pressShift = false;
-          if ((item.code === 'ShiftLeft' || item.code === 'AltLeft') && (vars.changeLanguage[0] === true && vars.changeLanguage[1] === true)) {
+          if (item.code === 'CapsLock') {
+              vars.pressCaps = (!vars.pressCaps);
+          }
+          if (item.code.match(/ShiftLeft|ShiftRight/)) { 
+              vars.pressShift = false;
+            }
+          if (item.code.match(/ShiftLeft|AltLeft/) && (vars.changeLanguage[0] && vars.changeLanguage[1])) {
             vars.changeLanguage[0] = false;
             vars.changeLanguage[1] = false;
             vars.lang === 'ru' ? vars.lang = 'eng' : vars.lang = 'ru';
