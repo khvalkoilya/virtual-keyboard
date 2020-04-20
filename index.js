@@ -140,7 +140,7 @@ document.querySelector('body').addEventListener('mouseup', (e) => {
   const parent = e.target.parentElement;
   const elem = e.target;
   if (parent.classList.contains('buttonClick') || elem.classList.contains('buttonClick')) {
-    if (elem.classList.contains('CapsLock') || parent.classList.contains('CapsLock')) {
+    if (elem.classList.contains('CapsLock') || elem.innerHTML === 'CapsLock') {
       if (pressCaps) {
         if (elem.tagName === 'DIV') elem.classList.remove('buttonClick');
         else if (parent.tagName === 'DIV') parent.classList.remove('buttonClick');
@@ -161,7 +161,6 @@ document.querySelector('body').addEventListener('mouseup', (e) => {
     }
   } else {
     document.querySelectorAll('div').forEach((key) => key.classList.remove('buttonClick'));
-    document.querySelector('.CapsLock').classList.add('buttonClick');
     document.querySelector('textarea').focus();
   }
 });
