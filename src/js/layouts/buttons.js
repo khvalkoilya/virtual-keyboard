@@ -516,8 +516,6 @@ const objOfKeys = [{
   shiftRuValue: 'EN',
   shiftEngValue: 'RU',
 },
-
-
 ];
 
 export default objOfKeys;
