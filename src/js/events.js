@@ -5,7 +5,7 @@ import vars from './variables.js'
 import * as languages from './language.js'
 
 export function mouseDownFunction(e) {
-    vars.cursor = document.querySelector('textarea').selectionStart;
+    vars.cursor = vars.field.selectionStart;
     const parent = e.target.parentElement;
     const elem = e.target;
     if (elem.tagName === 'DIV') elem.classList.add('buttonClick');
@@ -34,7 +34,7 @@ export function mouseUpFunction(e) {
         else if (parent.tagName === 'DIV') parent.classList.remove('buttonClick');
         if (elem.classList.contains('ShiftLeft') || parent.classList.contains('ShiftLeft') || elem.classList.contains('ShiftRight') || parent.classList.contains('ShiftRight')) vars.pressShift = false;
         if (elem.classList.contains('language') || parent.classList.contains('language')) {
-          document.querySelector('textarea').focus();
+          vars.field.focus();
           vars.lang === 'ru' ? vars.lang = 'eng' : vars.lang = 'ru';
           languages.set('lang', vars.lang)
           keyFill(vars.lang);   
@@ -42,12 +42,12 @@ export function mouseUpFunction(e) {
       }
     } else {
       document.querySelectorAll('div').forEach((key) => key.classList.remove('buttonClick'));
-      document.querySelector('textarea').focus();
+      vars.field.focus();
     }
   };
   
 export function keyDownFunction (event) {
-    vars.cursor = document.querySelector('textarea').selectionStart;
+    vars.cursor = vars.field.selectionStart;
     objOfKeys.forEach((item) => {
       if (item.code === event.code) {
         document.querySelector(`.${item.code}`).classList.add('buttonClick');

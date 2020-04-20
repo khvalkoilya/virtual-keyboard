@@ -6,5 +6,6 @@ export default function createBase() {
     const main = create('main',null,[textarea,section],body);
     textarea.focus();
     body.setAttribute('onselectstart', 'return false');
+    return textarea;
 }
   

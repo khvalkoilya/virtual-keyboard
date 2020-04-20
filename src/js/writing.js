@@ -1,8 +1,8 @@
 import vars from './variables.js';
 
 export function enterOneSymbol(symbol) {
-    document.querySelector('textarea').value = document.querySelector('textarea').value.slice(0, vars.cursor) + symbol + document.querySelector('textarea').value.slice(vars.cursor, document.querySelector('textarea').value.length);
-    document.querySelector('textarea').selectionEnd = vars.cursor + 1;
+    vars.field.value = vars.field.value.slice(0, vars.cursor) + symbol + vars.field.value.slice(vars.cursor, vars.field.value.length);
+    vars.field.selectionEnd = vars.cursor + 1;
   }
   
 export function write(item) {
@@ -30,37 +30,37 @@ export function write(item) {
 export function enterSymbols(item) {
     console.log(vars.cursor)
     window.event.preventDefault();
-    if (document.querySelector('textarea').selectionStart === document.querySelector('textarea').selectionEnd) {
+    if (vars.field.selectionStart === vars.field.selectionEnd) {
       if (item.code === 'Enter') {
-        document.querySelector('textarea').value = `${document.querySelector('textarea').value.slice(0, vars.cursor)}\n${document.querySelector('textarea').value.slice(vars.cursor, document.querySelector('textarea').value.length)}`;
-        document.querySelector('textarea').selectionEnd = vars.cursor + 1;
+        vars.field.value = `${vars.field.value.slice(0, vars.cursor)}\n${vars.field.value.slice(vars.cursor, vars.field.value.length)}`;
+        vars.field.selectionEnd = vars.cursor + 1;
       }
       if (item.code === 'Backspace') {
         if (vars.cursor !== 0) {
-          document.querySelector('textarea').value = document.querySelector('textarea').value.slice(0, vars.cursor - 1) + document.querySelector('textarea').value.slice(vars.cursor, document.querySelector('textarea').value.length);
-          document.querySelector('textarea').selectionEnd = vars.cursor - 1;
+          vars.field.value = vars.field.value.slice(0, vars.cursor - 1) + vars.field.value.slice(vars.cursor, vars.field.value.length);
+          vars.field.selectionEnd = vars.cursor - 1;
         }
       }
       if (item.code === 'Delete') {
-        document.querySelector('textarea').value = document.querySelector('textarea').value.slice(0, vars.cursor) + document.querySelector('textarea').value.slice(vars.cursor + 1, document.querySelector('textarea').value.length);
-        document.querySelector('textarea').selectionEnd = vars.cursor;
+        vars.field.value = vars.field.value.slice(0, vars.cursor) + vars.field.value.slice(vars.cursor + 1, vars.field.value.length);
+        vars.field.selectionEnd = vars.cursor;
       }
-      if (item.code === 'ArrowLeft') if (vars.cursor !== 0) document.querySelector('textarea').selectionEnd = vars.cursor - 1;
-      if (item.code === 'ArrowRight') document.querySelector('textarea').selectionStart = vars.cursor + 1;
-      if (item.code === 'ArrowUp') document.querySelector('textarea').selectionEnd = 0;
-      if (item.code === 'ArrowDown') document.querySelector('textarea').selectionStart = document.querySelector('textarea').value.length;
+      if (item.code === 'ArrowLeft') if (vars.cursor !== 0) vars.field.selectionEnd = vars.cursor - 1;
+      if (item.code === 'ArrowRight') vars.field.selectionStart = vars.cursor + 1;
+      if (item.code === 'ArrowUp') vars.field.selectionEnd = 0;
+      if (item.code === 'ArrowDown') vars.field.selectionStart = vars.field.value.length;
       if (item.code === 'Tab') {
-        document.querySelector('textarea').value = `${document.querySelector('textarea').value.slice(0, vars.cursor)}    ${document.querySelector('textarea').value.slice(vars.cursor, document.querySelector('textarea').value.length)}`;
-        document.querySelector('textarea').selectionEnd = vars.cursor + 4;
+        vars.field.value = `${vars.field.value.slice(0, vars.cursor)}    ${vars.field.value.slice(vars.cursor, vars.field.value.length)}`;
+        vars.field.selectionEnd = vars.cursor + 4;
       }
       if (item.type === 'write') {
         write(item);
       }
     } else if (item.code === 'Backspace' || item.code === 'Delete' || item.code === 'Tab' || item.code === 'Enter' || item.type === 'write') {
-      vars.cursor = document.querySelector('textarea').selectionStart;
-      document.querySelector('textarea').value = document.querySelector('textarea').value.slice(0, document.querySelector('textarea').selectionStart) + document.querySelector('textarea').value.slice(document.querySelector('textarea').selectionEnd, document.querySelector('textarea').value.length);
-      document.querySelector('textarea').selectionStart = vars.cursor;
-      document.querySelector('textarea').selectionEnd = vars.cursor;
+      vars.cursor = vars.field.selectionStart;
+      vars.field.value = vars.field.value.slice(0, vars.field.selectionStart) + vars.field.value.slice(vars.field.selectionEnd, vars.field.value.length);
+      vars.field.selectionStart = vars.cursor;
+      vars.field.selectionEnd = vars.cursor;
       if (item.code !== 'Backspace' && item.code !== 'Delete') { enterSymbols(item); }
     }
   }
