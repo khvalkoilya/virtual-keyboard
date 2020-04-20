@@ -6,8 +6,12 @@ function enterOneSymbol(symbol, to = 0, from = 0, number = 1, firstStop = vars.c
 }
 
 function transitionToEntering(first, second) {
-    if (vars.lang === 'ru') enterOneSymbol(first);
-    if (vars.lang === 'eng') enterOneSymbol(second);
+    if (vars.lang === 'ru') {
+        enterOneSymbol(first);
+    }
+    if (vars.lang === 'eng') {
+        enterOneSymbol(second);
+    }
 }
   
 export function write(item) {
@@ -29,7 +33,6 @@ export function write(item) {
   }
   
 export function enterSymbols(item) {
-    console.log(vars.cursor)
     window.event.preventDefault();
     if (vars.field.selectionStart === vars.field.selectionEnd) {
       switch (item.code){
@@ -68,6 +71,8 @@ export function enterSymbols(item) {
       }
     } else if (item.code.match(/Backspace|Delete|Tab|Enter/) || item.type === 'write') {
       enterOneSymbol('',0,0,0,vars.field.selectionStart,vars.field.selectionEnd)
-      if (item.code !== 'Backspace' && item.code !== 'Delete') { enterSymbols(item); }
+      if (item.code !== 'Backspace' && item.code !== 'Delete') { 
+          enterSymbols(item); 
+        }
     }
   }

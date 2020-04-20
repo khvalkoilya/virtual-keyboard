@@ -1,8 +1,9 @@
 import create from './utils/create.js'
 import objOfKeys from './layouts/buttons.js';
+import vars from './variables.js';
 
 export default function keyFill(lang) {
-    keyboard.innerHTML = '';
+    vars.keyboard.innerHTML = '';
     objOfKeys.forEach((item) => {
       const childs = [];
       const upLetter = create('p','upLetter')
@@ -11,8 +12,12 @@ export default function keyFill(lang) {
       if (item.view === 'double') {
         upLetter.innerHTML = item[`shift${capitalisedLanguage}Value`];
         centerLetter.innerHTML = item[`${lang}Value`];
-      } else centerLetter.innerHTML = item[`shift${capitalisedLanguage}Value`];
-      if(upLetter.innerHTML !== '') childs.push(upLetter);
+      } else {
+        centerLetter.innerHTML = item[`shift${capitalisedLanguage}Value`];
+      }
+      if(upLetter.innerHTML !== '') {
+        childs.push(upLetter);
+      }
       childs.push(centerLetter);
       const classes = `${item.size} ${item.code}`;
       const key = create('div', null, childs);

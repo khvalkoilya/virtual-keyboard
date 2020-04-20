@@ -1,7 +1,8 @@
 import * as languages from './language.js'
 
 export default {
-    
+    keyboard: '',
+    field: '',
     changeLanguage : [false, false],
     pressShift : false,
     pressCaps : false,
