@@ -5,7 +5,7 @@
   "main": "./src/js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ./src/js/index.js ./src/js/layouts/buttons.js"
+    "lint": "eslint ./src/js/"
   },
   "repository": {
     "type": "git",

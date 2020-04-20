@@ -1,11 +1,11 @@
 export function set(name, value) {
-    window.localStorage.setItem(name, value);
+  window.localStorage.setItem(name, value);
 }
-  
+
 export function get(name, subst = null) {
-    return window.localStorage.getItem(name) || subst;
+  return window.localStorage.getItem(name) || subst;
 }
-  
+
 export function del(name) {
-    localStorage.removeItem(name);
+  localStorage.removeItem(name);
 }

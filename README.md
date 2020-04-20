@@ -6,4 +6,4 @@ Then you should compile it use $sass style.scss style.css
 # eslint
 I have also use there eslint plugin
 To install it white in bash $npm install -D eslint
-For check my index.js and buttons.js write $npm run lint
+For check all my .js files write $npm run lint

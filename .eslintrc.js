@@ -16,6 +16,8 @@ module.exports = {
   },
   rules: {
     "import/extensions": ["error",  "always", {ignorePackages: true} ],
-    "linebreak-style": ['error', 'windows']
+    "linebreak-style": ['error', 'windows'],
+    "max-len": [2, 120, 4, {"ignoreUrls": true}],
+    "no-unused-expressions": ["error", { "allowTernary": true }]
   },
 };
